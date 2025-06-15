@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Taxímetro</title>
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      color: #f44336;
+      font-size: 2.5em;
+      margin-bottom: 30px;
+    }
+
+    #taximeter {
+      background-color: #000;
+      border: 4px solid #f44336;
+      border-radius: 20px;
+      display: inline-block;
+      padding: 30px 40px;
+      box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    }
+
+    #display {
+      background-color: #111;
+      color: #00ff00;
+      font-size: 2em;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      letter-spacing: 2px;
+      box-shadow: inset 0 0 10px #00ff00;
+    }
+
+    button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      margin: 8px;
+      font-size: 1em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: #c62828;
+    }
+
+    footer {
+      margin-top: 50px;
+      color: #888;
+      font-size: 0.9em;
+    }
+
+    footer a {
+      color: #f44336;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>TAXÍMETRO</h1>
+
+  <div id="taximeter">
+    <div id="display">
+      Tiempo: <span id="time">0</span>s<br>
+      Costo: <span id="cost">0.00</span>€
+    </div>
+
+    <div>
+      <button onclick="start()">Iniciar</button>
+      <button onclick="pause()">Pausar</button>
+      <button onclick="reset()">Reiniciar</button>
+      <button onclick="stop()">Detener</button>
+    </div>
+  </div>
+
+  <footer>
+    Desarrollado por <a href="https://github.com/BlocksJuice" target="_blank">BlocksJuice</a>
+  </footer>
+
+  <script>
+    let seconds = 0;
+    let costPerSecond = 1;
+    let interval = null;
+    let isRunning = false;
+
+    function updateDisplay() {
+      document.getElementById("time").textContent = seconds;
+      document.getElementById("cost").textContent = (seconds * costPerSecond).toFixed(2);
+    }
+
+    function start() {
+      if (!isRunning) {
+        interval = setInterval(() => {
+          seconds++;
+          updateDisplay();
+        }, 1000);
+        isRunning = true;
+      }
+    }
+
+    function pause() {
+      clearInterval(interval);
+      isRunning = false;
+    }
+
+    function reset() {
+      clearInterval(interval);
+      seconds = 0;
+      updateDisplay();
+      isRunning = false;
+    }
+
+    function stop() {
+      clearInterval(interval);
+      isRunning = false;
+    }
+
+    updateDisplay();
+  </script>
+
+</body>
+</html>
